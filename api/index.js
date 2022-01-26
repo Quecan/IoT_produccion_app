@@ -22,12 +22,11 @@ app.use(cors());
 app.use("/api", require("./routes/devices.js"));
 app.use("/api", require("./routes/users.js"));
 
-
 module.exports = app;
 
 //listener
-app.listen(3002, () => {
-  console.log("API server listening on port 3002");
+app.listen(3001, () => {
+  console.log("API server listening on port 3001");
 });
 
 //Mongo Connection
@@ -57,26 +56,20 @@ const options = {
   authSource: "admin"
 };
 
-try {
-    mongoose.connect(uri, options).then(
-        () => {
-          console.log("\n");
-          console.log("*******************************".green);
-          console.log("✔ Mongo Successfully Connected!".green);
-          console.log("*******************************".green);
-          console.log("\n");
-        },
-        (err) => {
-          console.log("\n");
-          console.log("*******************************".red);
-          console.log("    Mongo Connection Failed    ".red);
-          console.log("*******************************".red);
-          console.log("\n");
-          console.log(err);
-        }
-      );
-} catch (error) {
-    console.log("ERROR CONNECTING MONGO ");
-    console.log(error);
-}
-
+mongoose.connect(uri, options).then(
+  () => {
+    console.log("\n");
+    console.log("*******************************".green);
+    console.log("✔ Mongo Successfully Connected!".green);
+    console.log("*******************************".green);
+    console.log("\n");
+  },
+  err => {
+    console.log("\n");
+    console.log("*******************************".red);
+    console.log("    Mongo Connection Failed    ".red);
+    console.log("*******************************".red);
+    console.log("\n");
+    console.log(err);
+  }
+);
