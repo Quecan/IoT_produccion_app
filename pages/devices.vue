@@ -73,7 +73,7 @@
           <h4 class="card-title">Devices</h4>
         </div>
 
-        <el-table :data="devices">
+        <el-table :data="$store.state.devices">
           <el-table-column label="#" min-width="50" align="center">
             <div slot-scope="{ row, $index }">
               {{ $index + 1 }}
@@ -91,9 +91,17 @@
 
           <el-table-column label="Actions">
             <div slot-scope="{ row, $index }">
-
-              <el-tooltip content="Saver Status Indicator" style="margin-right:10px">
-                <i class="fas fa-database " :class="{'text-success' : row.saverRule, 'text-dark' : !row.saverRule}" ></i>
+              <el-tooltip
+                content="Saver Status Indicator"
+                style="margin-right:10px"
+              >
+                <i
+                  class="fas fa-database "
+                  :class="{
+                    'text-success': row.saverRule,
+                    'text-dark': !row.saverRule
+                  }"
+                ></i>
               </el-tooltip>
 
               <el-tooltip content="Database Saver">
@@ -122,15 +130,13 @@
                   <i class="tim-icons icon-simple-remove "></i>
                 </base-button>
               </el-tooltip>
-
             </div>
           </el-table-column>
         </el-table>
       </card>
     </div>
 
-    <Json :value="devices"></Json>
-    
+    <Json :value="$store.state.devices"></Json>
   </div>
 </template>
 
@@ -147,52 +153,46 @@ export default {
     [Select.name]: Select
   },
   data() {
-    return {
-      devices: [
-        {
-          name: "Home",
-          dId: "8888",
-          templateName: "Power Sensor",
-          templateId: "984237562348756ldksjfh",
-          saverRule: false,
-        },
-        {
-          name: "Office",
-          dId: "1111",
-          templateName: "Power Sensor",
-          templateId: "984237562348756ldksjfh",
-          saverRule: true
-        },
-        {
-          name: "Farm",
-          dId: "99999",
-          templateName: "Power Sensor",
-          templateId: "984237562348756ldksjfh",
-          saverRule: true
-        }
-      ]
-    };
+    return {};
   },
   mounted() {
-    this.getDevices();
+    this.$store.dispatch("getDevices");
   },
   methods: {
-    getDevices(){
+    deleteDevice(device) {
       const axiosHeader = {
         headers: {
           token: this.$store.state.auth.token
+        },
+        params: {
+          dId: device.dId
         }
-      }
+      };
 
-      this.$axios.get("/device", axiosHeader)
-      .then(res => {
-        console.log(res.data.data);
-        this.devices = res.data.data;
-      })
+      this.$axios
+        .delete("/device", axiosHeader)
+        .then(res => {
+
+          if (res.data.status == "success") {
+            this.$notify({
+              type: "success",
+              icon: "tim-icons icon-check-2",
+              message: device.name + " deleted!"
+            });
+            this.$store.dispatch("getDevices");
+          }
+          
+        })
+        .catch(e => {
+          console.log(e);
+          this.$notify({
+            type: "danger",
+            icon: "tim-icons icon-alert-circle-exc",
+            message: " Error deleting " + device.name
+          });
+        });
     },
-    deleteDevice(device) {
-      alert("DELETING " + device.name);
-    },
+
     updateSaverRuleStatus(index) {
       console.log(index);
       this.devices[index].saverRule = !this.devices[index].saverRule;
