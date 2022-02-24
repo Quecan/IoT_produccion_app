@@ -143,11 +143,9 @@ async function createResources() {
         console.log("Error creating resources");
         console.log(error);
     }
-
    
 
 }
-
 
 setTimeout(() => {
   listResources();

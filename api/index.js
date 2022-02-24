@@ -37,7 +37,7 @@ const mongoUserName = "devuser";
 const mongoPassword = "devpassword";
 const mongoHost = "localhost";
 const mongoPort = "27017";
-const mongoDatabase = "ioticos_god_level";
+const mongoDatabase = "ioticos_god_level2";
 
 var uri =
   "mongodb://" +
