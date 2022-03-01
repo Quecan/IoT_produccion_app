@@ -110,7 +110,7 @@
               label="Var Name"
             ></el-table-column>
 
-            <el-table-column prop="variable" label="Variable"></el-table-column>
+            <el-table-column prop="variable" label="Var"></el-table-column>
 
             <el-table-column
               prop="condition"
@@ -126,7 +126,7 @@
 
             <el-table-column prop="counter" label="Matches"></el-table-column>
 
-            <el-table-column header-align="right" align="right" label="Actions">
+            <el-table-column min-width="110" header-align="right" align="right" label="Actions">
               <div
                 slot-scope="{ row, $index }"
                 class="text-right table-actions"
@@ -194,6 +194,7 @@ export default {
       selectedWidgetIndex: null,
       newRule: {
         dId: null,
+        deviceName: null,
         status: true,
         variableFullName: null,
         variable: null,
@@ -318,6 +319,7 @@ export default {
       }
 
       this.newRule.dId = this.$store.state.selectedDevice.dId;
+      this.newRule.deviceName = this.$store.state.selectedDevice.name;
       this.newRule.variableFullName = this.$store.state.selectedDevice.template.widgets[
         this.selectedWidgetIndex
       ].variableFullName;
