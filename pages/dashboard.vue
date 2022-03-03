@@ -1,13 +1,8 @@
 <template>
+    
   <div>
-    <h2>
-      DashboardIOTSoluciones
-    </h2>
+      Dash
   </div>
+
 </template>
 
-<script>
-export default {
-  middleware: "authenticated"
-};
-</script>
