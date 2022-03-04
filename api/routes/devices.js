@@ -21,7 +21,7 @@ import AlarmRule from '../models/emqx_alarm_rule.js';
 const auth = {
   auth: {
     username: "admin",
-    password: "Esrico123"
+    password: "emqxsecret"
   }
 };
 
@@ -77,12 +77,16 @@ router.get("/device", checkAuth, async (req, res) => {
 //NEW DEVICE
 router.post("/device", checkAuth, async (req, res) => {
   try {
+
     const userId = req.userData._id;
+    
     var newDevice = req.body.newDevice;
 
     newDevice.userId = userId;
 
     newDevice.createdTime = Date.now();
+
+    newDevice.password = makeid(10);
 
     await createSaverRule(userId, newDevice.dId, true);
 
@@ -332,6 +336,17 @@ async function deleteSaverRule(dId) {
     console.log(error);
     return false;
   }
+}
+
+function makeid(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
 
 module.exports = router;
