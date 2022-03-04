@@ -21,7 +21,7 @@ import AlarmRule from '../models/emqx_alarm_rule.js';
 const auth = {
   auth: {
     username: "admin",
-    password: "emqxsecret"
+    password: "Esrico123"
   }
 };
 
