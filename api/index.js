@@ -25,6 +25,7 @@ app.use("/api", require("./routes/templates.js"));
 app.use("/api", require("./routes/webhooks.js"));
 app.use("/api", require("./routes/emqxapi.js"));
 app.use("/api", require("./routes/alarms.js"));
+app.use("/api", require("./routes/dataprovider.js"));
 
 module.exports = app;
 
@@ -32,6 +33,8 @@ module.exports = app;
 app.listen(3001, () => {
   console.log("API server listening on port 3001");
 });
+
+
 
 //Mongo Connection
 const mongoUserName = "devuser";
