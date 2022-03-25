@@ -4,7 +4,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'IoT GL',
+    title: 'IoT Tecnologias&Desarrollo',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -72,7 +72,7 @@ extensions: ["vue", "jsx"]
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: "http://127.0.0.1:3001/api"
+    baseURL:process.env.AXIOS_BASE_URL
   },
 
   /*

@@ -269,7 +269,7 @@ async function getDeviceMqttCredentials(dId, userId) {
 function startMqttClient() {
   const options = {
     port: 1883,
-    host: "localhost",
+    host: process.env.EMXQ_NODE_HOST,
     clientId:
     "webhook_superuser" + Math.round(Math.random() * (0 - 10000) * -1),
     username: process.env.EMQX_NODE_SUPERUSER_USER, 
@@ -282,7 +282,7 @@ function startMqttClient() {
     encoding: "utf8"
   };
 
-  client = mqtt.connect("mqtt://" + "localhost", options);
+  client = mqtt.connect("mqtt://" + process.env.EMXQ_NODE_HOST, options);
 
   client.on("connect", function() {
     console.log("MQTT CONNECTION -> SUCCESS;".green);
