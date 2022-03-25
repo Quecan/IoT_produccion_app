@@ -18,37 +18,6 @@ var client;
 //**** A P I *******
 //******************
 
-var ex = {
-  username: 'user',
-  password: 'pass',
-  topic: '6215608b3ce67c90443b6e9b/987/',
-  variables: [
-    {
-      variable: 'cM7be41RZF',
-      variableFullName: 'temperature',
-      variableType: 'input',
-      variableSendFreq: 10
-    },
-    {
-      variable: 'PZVL0osgQD',
-      variableFullName: 'Humedity',
-      variableType: 'input',
-      variableSendFreq: 5
-    },
-    {
-      variable: 'CXuVXt4Vxl',
-      variableFullName: 'Luz1',
-      variableType: 'output',
-      variableSendFreq: undefined
-    },
-    {
-      variable: '3QLImJJYk5',
-      variableFullName: 'Luz2',
-      variableType: 'output',
-      variableSendFreq: undefined
-    }
-  ]
-}
 
 //DEVICE CREDENTIALS WEBHOOK
 router.post("/getdevicecredentials", async (req, res) => {
@@ -302,9 +271,9 @@ function startMqttClient() {
     port: 1883,
     host: "localhost",
     clientId:
-      "webhook_superuser" + Math.round(Math.random() * (0 - 10000) * -1),
-    username: "user",
-    password: "pass",
+    "webhook_superuser" + Math.round(Math.random() * (0 - 10000) * -1),
+    username: process.env.EMQX_NODE_SUPERUSER_USER, 
+    password: process.env.EMQX_NODE_SUPERUSER_PASSWORD,
     keepalive: 60,
     reconnectPeriod: 5000,
     protocolId: "MQIsdp",
