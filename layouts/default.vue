@@ -5,7 +5,7 @@
     <side-bar
       :background-color="sidebarBackground"
       short-title="GL"
-      title="IoTicos GL"
+      title="IoTTecnologias"
     >
       <template slot-scope="props" slot="links">
         <sidebar-item
@@ -106,8 +106,8 @@ export default {
       sidebarBackground: "primary", //vue|blue|orange|green|red|primary
       client:null,
       options:{
-        host: "localhost",
-        port: 8083,
+        host: process.env.mqtt_host,
+        port: process.env.mqtt_port,
         endpoint: "/mqtt",
         clean: true,
         connectTimeout: 5000,
@@ -171,7 +171,12 @@ export default {
       const deviceSubscribeTopic = this.$store.state.auth.userData._id + "/+/+/sdata";
       const notifSubscribeTopic = this.$store.state.auth.userData._id + "/+/+/notif";
 
-      const connectUrl = "ws://" + this.options.host + ":" + this.options.port + this.options.endpoint;
+      const connectUrl = 
+      process.env.mqtt_prefix +
+      this.options.host +
+      ":" + 
+      this.options.port +
+      this.options.endpoint;
 
       try {
         this.client = mqtt.connect(connectUrl, this.options);
@@ -249,9 +254,7 @@ export default {
 
 
     },
-      
-
-    
+        
 
     toggleSidebar() {
       if (this.$sidebar.showSidebar) {

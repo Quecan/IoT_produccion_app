@@ -285,7 +285,7 @@ function startMqttClient() {
   client = mqtt.connect("mqtt://" + process.env.EMXQ_NODE_HOST, options);
 
   client.on("connect", function() {
-    console.log("MQTT CONNECTION -> SUCCESS;".green);
+    console.log("MQTT CONNECTION -> perfecta!!;".green);
     console.log("\n");
   });
 
