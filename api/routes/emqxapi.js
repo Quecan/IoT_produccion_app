@@ -126,7 +126,7 @@ async function createResources() {
         const res1 = await axios.post(url, data1, auth);
     
         if (res1.status === 200){
-            console.log("Saver resource created!".green);
+            console.log("Saver resource created!!!".green);
         }
     
         const res2 = await axios.post(url, data2, auth);
