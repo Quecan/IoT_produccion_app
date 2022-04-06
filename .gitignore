@@ -88,8 +88,3 @@ sw.*
 
 # Vim swap files
 *.swp
-
-.env
-.log
-app
-mongodata
