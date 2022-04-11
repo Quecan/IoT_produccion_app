@@ -3,11 +3,14 @@ const router = express.Router();
 const axios = require("axios");
 const colors = require("colors");
 
+
+import EmqxAuthRule from "../models/emqx_auth.js";
+
 const auth = {
-    auth: {
-        username: 'admin',
-        password: process.env.EMQX_DEFAULT_APPLICATION_SECRET
-    }
+  auth: {
+    username: "admin",
+    password: process.env.EMQX_DEFAULT_APPLICATION_SECRET
+  }
 };
 
 global.saverResource = null;
@@ -33,7 +36,7 @@ Para borrar manualmente los recursos y reiniciemos node */
 async function listResources() {
 
 try {
-    const url = "http://"+process.env.EMXQ_NODE_HOST+"8085/api/v4/resources/";
+    const url = "http://" + process.env.EMQX_API_HOST +":8085/api/v4/resources/";
 
     const res = await axios.get(url, auth);
   
@@ -97,12 +100,12 @@ try {
 async function createResources() {
 
     try {
-        const url = "http://"+process.env.EMXQ_NODE_HOST+"8085/api/v4/resources";
+        const url = "http://" + process.env.EMQX_API_HOST +":8085/api/v4/resources";
 
         const data1 = {
             "type": "web_hook",
             "config": {
-                url: "http://"+process.env.EMXQ_NODE_HOST+"3001/api/saver-webhook",
+                url: "http://" + process.env.WEBHOOKS_HOST +":3001/api/saver-webhook",
                 headers: {
                     token: process.env.EMQX_API_TOKEN
                 },
@@ -114,7 +117,7 @@ async function createResources() {
         const data2 = {
             "type": "web_hook",
             "config": {
-                url: "http://"+process.env.EMXQ_NODE_HOST+"3001/api/alarm-webhook",
+                url: "http://" + process.env.WEBHOOKS_HOST +":3001/api/alarm-webhook",
                 headers: {
                     token: process.env.EMQX_API_TOKEN
                 },
@@ -126,7 +129,7 @@ async function createResources() {
         const res1 = await axios.post(url, data1, auth);
     
         if (res1.status === 200){
-            console.log("Saver resource created!!!".green);
+            console.log("Saver resource created!".green);
         }
     
         const res2 = await axios.post(url, data2, auth);
@@ -138,14 +141,17 @@ async function createResources() {
         setTimeout(() => {
             console.log("***** Emqx WH resources created! :) *****".green);
             listResources();
-        }, process.env.EMQX_RESOURCES_DELAY);
+        }, 1000);
     } catch (error) {
         console.log("Error creating resources");
         console.log(error);
     }
+
    
 
 }
+
+
 
 //check if superuser exist if not we create one
 global.check_mqtt_superuser = async function checkMqttSuperUser(){
@@ -186,6 +192,6 @@ global.check_mqtt_superuser = async function checkMqttSuperUser(){
 setTimeout(() => {
   console.log("LISTING RESORUCES!!!!!!!!!");
   listResources();
-}, process.env.EMQX_RESOURCES_DELAY)
+}, process.env.EMQX_RESOURCES_DELAY);
 
 module.exports = router;
